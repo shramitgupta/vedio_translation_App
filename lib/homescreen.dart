@@ -21,8 +21,21 @@ class _HomeScreenState extends State<HomeScreen> {
     'Assamese',
     'Telugu',
     'Tamil',
-    'Marathi' // Add more languages here
+    'Marathi'
   ];
+
+  void updateSelectedLanguages(List<String> newSelectedLanguages) {
+    setState(() {
+      selectedLanguages = newSelectedLanguages;
+    });
+  }
+
+  void handleSelectedLanguages(List<String> selectedLanguages) {
+    setState(() {
+      this.selectedLanguages = selectedLanguages;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // Use MediaQuery to get the screen size.
@@ -145,13 +158,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         left: 103 * widthRatio,
                         right: 103 * widthRatio,
                       ),
-                      child: Text(
-                        'Paste video link',
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.8700000047683716),
-                          fontSize: 24 * widthRatio * heightRatio,
-                          fontFamily: 'Gilroy-Bold',
-                          fontWeight: FontWeight.w500,
+                      child: FittedBox(
+                        child: Text(
+                          'Paste video link',
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(0.8700000047683716),
+                            fontSize: 24 * widthRatio * heightRatio,
+                            fontFamily: 'Gilroy-Bold',
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ),
@@ -193,222 +208,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: InkWell(
                     onTap: () {
                       showModalBottomSheet(
-                          context: context,
-                          shape: const RoundedRectangleBorder(
-                            // <-- SEE HERE
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(20.0),
-                            ),
+                        context: context,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(20.0),
                           ),
-                          builder: (context) {
-                            log("sex");
-                            return Container(
-                              color: const Color(0xff1F1F1F),
-                              height: 290 * heightRatio,
-                              width: 412 * widthRatio,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.only(top: 14 * heightRatio),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 16 * widthRatio,
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: ImageIcon(
-                                            const AssetImage(
-                                                "images/close.png"),
-                                            color: Colors.white,
-                                            size: 36 * widthRatio,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 77 * widthRatio,
-                                        ),
-                                        Text(
-                                          'Choose languages',
-                                          style: TextStyle(
-                                            color: Colors.white.withOpacity(
-                                                0.8700000047683716),
-                                            fontSize:
-                                                20 * widthRatio * heightRatio,
-                                            fontFamily: 'Gilroy-SemiBold',
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: -0.41,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 3 * heightRatio,
-                                  ),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 4 * widthRatio),
-                                    child: Text(
-                                      '(to dub your video to)',
-                                      style: TextStyle(
-                                        color: const Color(0xDDA0A0A0),
-                                        fontSize: 20 * widthRatio * heightRatio,
-                                        fontFamily: 'Gilroy-SemiBold',
-                                        fontWeight: FontWeight.w400,
-                                        height: 0,
-                                        letterSpacing: -0.41,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 23 * heightRatio,
-                                  ),
-                                  Wrap(
-                                    spacing: 8 * widthRatio,
-                                    runSpacing: 8 * heightRatio,
-                                    children: languages.map((language) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          if (selectedLanguages
-                                              .contains(language)) {
-                                            setState(() {
-                                              selectedLanguages
-                                                  .remove(language);
-                                            });
-                                          } else {
-                                            setState(() {
-                                              selectedLanguages.add(language);
-                                            });
-                                          }
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: 15 * widthRatio,
-                                            vertical: 6 * heightRatio,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: selectedLanguages
-                                                    .contains(language)
-                                                ? const Color(0xFF1BEB62)
-                                                : Colors.transparent,
-                                            border: Border.all(
-                                              color: const Color(0xFF1BEB62),
-                                              width: 1,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(16),
-                                          ),
-                                          child: Text(
-                                            language,
-                                            style: TextStyle(
-                                              color: selectedLanguages
-                                                      .contains(language)
-                                                  ? const Color(0xFF0A5222)
-                                                  : Colors.white,
-                                              fontSize:
-                                                  16 * widthRatio * heightRatio,
-                                              fontFamily: 'Gilroy-Regular',
-                                              fontWeight: FontWeight.w400,
-                                              height: 0,
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),
-                                  SizedBox(
-                                    height: 16 * heightRatio,
-                                  ),
-                                  Expanded(
-                                    child: Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            bottom: 23 * heightRatio,
-                                            right: 25 * widthRatio),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            TextButton(
-                                              onPressed: () {},
-                                              child: const Text(
-                                                "Clear",
-                                                style: TextStyle(
-                                                  color: Color(0xFFB9B9B9),
-                                                  fontSize: 16,
-                                                  fontFamily: 'Gilroy-SemiBold',
-                                                  fontWeight: FontWeight.w400,
-                                                  height: 0,
-                                                ),
-                                              ),
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                // Handle the selected languages here
-                                                print(selectedLanguages);
-                                                Navigator.of(context).pop();
-                                              },
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty
-                                                        .resolveWith<Color>(
-                                                            (states) {
-                                                  if (states.contains(
-                                                      MaterialState.disabled)) {
-                                                    return Colors
-                                                        .grey; // Button color when disabled
-                                                  }
-                                                  return selectedLanguages
-                                                          .isNotEmpty
-                                                      ? const Color(0xFF1BEB62)
-                                                      : Colors
-                                                          .grey; // Button color when enabled
-                                                }),
-                                                shape: MaterialStateProperty
-                                                    .all<OutlinedBorder>(
-                                                  RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30),
-                                                  ),
-                                                ),
-                                                padding: MaterialStateProperty
-                                                    .all<EdgeInsetsGeometry>(
-                                                  EdgeInsets.symmetric(
-                                                    vertical: 14 * heightRatio,
-                                                    horizontal: 15 * widthRatio,
-                                                  ),
-                                                ),
-                                                elevation: MaterialStateProperty
-                                                    .all<double>(8),
-                                              ),
-                                              child: Text(
-                                                'Done',
-                                                style: TextStyle(
-                                                  color:
-                                                      const Color(0xFF121212),
-                                                  fontSize: 16 *
-                                                      widthRatio *
-                                                      heightRatio,
-                                                  fontFamily: 'Gilroy-Bold',
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          });
+                        ),
+                        builder: (context) {
+                          return LanguageSelectionModal(
+                            widthRatio: widthRatio,
+                            heightRatio: heightRatio,
+                            selectedLanguages: selectedLanguages,
+                            languages: languages,
+                            updateSelectedLanguages: updateSelectedLanguages,
+                          );
+                        },
+                      );
                     },
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -434,10 +249,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           ImageIcon(
-                            AssetImage("images/chevron-right.png"),
+                            const AssetImage("images/chevron-right.png"),
                             color: selectedLanguages.isNotEmpty
                                 ? const Color(
-                                    0xFF1BEB62) // Change the background color to green
+                                    0xFF0A5222) // Change the background color to green
                                 : Colors.white.withOpacity(0.8700000047683716),
                             size: 24 * heightRatio,
                           ),
@@ -751,6 +566,216 @@ class CustomButton3 extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class LanguageSelectionModal extends StatefulWidget {
+  final List<String> selectedLanguages;
+  final List<String> languages;
+  final double widthRatio;
+  final double heightRatio;
+  final Function(List<String>) updateSelectedLanguages;
+
+  LanguageSelectionModal({
+    required this.selectedLanguages,
+    required this.languages,
+    required this.updateSelectedLanguages,
+    required this.widthRatio,
+    required this.heightRatio,
+  });
+
+  @override
+  _LanguageSelectionModalState createState() => _LanguageSelectionModalState();
+}
+
+class _LanguageSelectionModalState extends State<LanguageSelectionModal> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: const Color(0xff1F1F1F),
+      height: 290 * widget.heightRatio,
+      width: 412 * widget.widthRatio,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: 14 * widget.heightRatio),
+            child: Row(
+              children: [
+                const SizedBox(width: 16),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const ImageIcon(
+                    AssetImage("images/close.png"),
+                    color: Colors.white,
+                    size: 36,
+                  ),
+                ),
+                SizedBox(width: 77 * widget.widthRatio),
+                Text(
+                  'Choose languages',
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.87),
+                    fontSize: 20 * widget.heightRatio * widget.heightRatio,
+                    fontFamily: 'Gilroy-SemiBold',
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: -0.41,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 3 * widget.heightRatio),
+          Padding(
+            padding: EdgeInsets.only(left: 4 * widget.widthRatio),
+            child: const Text(
+              '(to dub your video to)',
+              style: TextStyle(
+                color: Color(0xDDA0A0A0),
+                fontSize: 20,
+                fontFamily: 'Gilroy-SemiBold',
+                fontWeight: FontWeight.w400,
+                height: 0,
+                letterSpacing: -0.41,
+              ),
+            ),
+          ),
+          SizedBox(height: 23 * widget.heightRatio),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: widget.languages.map((language) {
+              return GestureDetector(
+                onTap: () {
+                  if (widget.selectedLanguages.contains(language)) {
+                    setState(() {
+                      widget.selectedLanguages.remove(language);
+                    });
+                  } else {
+                    setState(() {
+                      widget.selectedLanguages.add(language);
+                    });
+                  }
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: widget.selectedLanguages.contains(language)
+                        ? const Color(0xFF1BEB62)
+                        : Colors.transparent,
+                    border: Border.all(
+                      color: const Color(0xFF1BEB62),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Text(
+                    language,
+                    style: TextStyle(
+                      color: widget.selectedLanguages.contains(language)
+                          ? const Color(0xFF0A5222)
+                          : Colors.white,
+                      fontSize: 16 * widget.heightRatio * widget.widthRatio,
+                      fontFamily: 'Gilroy-Regular',
+                      fontWeight: FontWeight.w400,
+                      height: 0,
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+          SizedBox(height: 16 * widget.heightRatio),
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.only(
+                    bottom: 23 * widget.heightRatio,
+                    right: 25 * widget.widthRatio),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          widget.selectedLanguages
+                              .clear(); // Clear selected languages
+                        });
+                      },
+                      child: Text(
+                        "Clear",
+                        style: TextStyle(
+                          color: const Color(0xFFB9B9B9),
+                          fontSize: 16 * widget.heightRatio * widget.widthRatio,
+                          fontFamily: 'Gilroy-SemiBold',
+                          fontWeight: FontWeight.w400,
+                          height: 0,
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (widget.selectedLanguages.isNotEmpty) {
+                          widget.updateSelectedLanguages(
+                              widget.selectedLanguages);
+                          // Handle the selected languages here
+                          log(widget.selectedLanguages.toString());
+                          Navigator.of(context).pop();
+                        } else {
+                          widget.updateSelectedLanguages(
+                              widget.selectedLanguages);
+                          // Show a message or prevent the modal from closing
+                          // if no language is selected.
+                          // You can display a SnackBar or any other appropriate UI.
+                        }
+                      },
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith<Color>((states) {
+                          if (states.contains(MaterialState.disabled)) {
+                            return Colors.grey; // Button color when disabled
+                          }
+                          return widget.selectedLanguages.isNotEmpty
+                              ? const Color(0xFF1BEB62)
+                              : Colors.grey; // Button color when enabled
+                        }),
+                        shape: MaterialStateProperty.all<OutlinedBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                          const EdgeInsets.symmetric(
+                            vertical: 14,
+                            horizontal: 15,
+                          ),
+                        ),
+                        elevation: MaterialStateProperty.all<double>(8),
+                      ),
+                      child: Text(
+                        'Done',
+                        style: TextStyle(
+                          color: const Color(0xFF121212),
+                          fontSize: 16 * widget.heightRatio * widget.widthRatio,
+                          fontFamily: 'Gilroy-Bold',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
