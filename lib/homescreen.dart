@@ -1,7 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:sih/buttons/submit.dart';
 import 'package:sih/history.dart';
+import 'package:sih/vedioplayer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String> languages = [
     'Hindi',
     'Gujrati',
-    'Bengli',
+    'Bengasli',
     'Assamese',
     'Telugu',
     'Tamil',
@@ -269,7 +271,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     widthRatio: widthRatio,
                     heightRatio: heightRatio,
                     onPressed: () {
-                      // Add your action here when the button is pressed.
+                      if (selectedLanguages.isNotEmpty) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VedioPlayer(
+                                  selectedLanguages: selectedLanguages)),
+                        );
+                      }
                     },
                   ),
                 ),
@@ -329,6 +338,7 @@ class appBar extends StatelessWidget {
           CircleAvatar(
             backgroundImage: const AssetImage('images/user.png'),
             backgroundColor: const Color(0xff292929),
+            //Color(0xff121212),
             radius: 15 * widthRatio,
           )
         ],
@@ -375,64 +385,6 @@ class MyTextField extends StatelessWidget {
             ),
             contentPadding: const EdgeInsets.all(8),
             hintText: 'Paste your URL here...',
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ClickableButton1 extends StatelessWidget {
-  final double widthRatio;
-  final double heightRatio;
-  final VoidCallback onPressed;
-
-  ClickableButton1({
-    required this.widthRatio,
-    required this.heightRatio,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 22 * heightRatio),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onPressed,
-          borderRadius: BorderRadius.circular(41),
-          child: Container(
-            width: 348 * widthRatio,
-            height: 46 * heightRatio,
-            padding: EdgeInsets.symmetric(
-              vertical: 14 * heightRatio,
-              horizontal: 31 * widthRatio,
-            ),
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              color: const Color(0xFF1BEB62),
-              borderRadius: BorderRadius.circular(41),
-              boxShadow: const [
-                BoxShadow(
-                  color: Color(0xFF1BEB62),
-                  blurRadius: 8,
-                  offset: Offset(0, 0),
-                  spreadRadius: 1,
-                ),
-              ],
-            ),
-            child: Center(
-              child: Text(
-                'Submit',
-                style: TextStyle(
-                  color: const Color(0xFF121212),
-                  fontSize: 16 * widthRatio * heightRatio,
-                  fontFamily: 'Gilroy-Bold',
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
           ),
         ),
       ),
